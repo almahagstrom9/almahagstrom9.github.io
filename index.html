@@ -10,8 +10,35 @@
     <div class="container"> <!-- Centers content and sets max width -->
         <h1>Average Student Loan Balance in America</h1>
         <div id="vis"></div>
+        
+        <section>
+            <h2>Introduction</h2>
+            <p>The dataset consists of student loan balances for children born between 1978 and 1985 (measured in 2020). Each variable represents a student’s geographic location (county and state), race, and parental income to allow for a socioeconomic and demographic comparison. The race categories included Asian, Black, Hispanic, White, and American Indian or Alaskan Native (AIAN). The parental income was represented as a national income percentile where the 50th percentile represents the median and 25th and 75th percentiles represent the upper and lower income classes respectively. The primary variable that was analyzed was the average student loan balance in 2020. This dataset enables a comprehensive analysis of how student debt varied across income backgrounds, racial groups, and geographic regions in the US.</p>
 
+            <h2>Rationale</h2>
+            <p>With the data by county, we wanted to display the data on a small and large scale. Users can view average student loans across different states in the U.S. Additionally, when users click on any state, they can see average student loans by county. We decided to use shades of red to represent the level of student loans, with dark red being the highest bracket of student loans. This was because red is often correlated with bad emotions, and student loan debt is a definite burden.</p>
 
+            <p>Our implemented interactions include:</p>
+            <ul>
+                <li>Dynamic Filters - users can select any state to receive more in-depth student loan information by county. There is also a filter above the map to filter the student loan debt by race including Asian, Black, Hispanic, White, and American Indian or Alaskan Native (AIAN)</li>
+                <li>Details-on-Demand (tooltips) - when users hover over a state, the state name and the average state student loan debt value appear. This feature continues in the county view of each state.</li>
+            </ul>
+
+            <p>We chose these particular visual encodings and interactions because it allowed users to view and understand a large amount of data. By separating the country from the state view, users can choose to see more in-depth information on specific areas they are interested in. By adding filters by race, the user can compare the stark differences on the map. Originally, we considered only displaying the state of Maryland and its counties, however with further discussion we did not want to sacrifice displaying information. We later came up with the idea to be able to tap into certain states.</p>
+
+            <h2>References</h2>
+            <p>TopoJSON an extension of GeoJSON Library<br>
+            Opportunity Insights (2026). Student Loan Balance by County [Data set]. Opportunity Insights Data Library. Retrieved from https://opportunityinsights.org/data/</p>
+
+            <h2>Development Process</h2>
+            <p>First, our team brainstormed together. We browsed through the US Social Mobility datasets and were most intrigued by the datasets related to student loans and debt because it related to our experiences as college students. We initially noticed that the dataset was split amongst socioeconomic and demographic variables, such as state, county, race, and income. As a result, we agreed that the data visualization would be most effective as a US map that allows users to click on each state and then each county to learn more about specific data. To communicate the differences between regions, we decided to include a gradient color scheme, where darker colors represented higher student loans and lighter colors represented the opposite.</p>
+
+            <p>After finalizing all of the features we wanted to include, we began to implement. First, we created a GitHub repository so we could collaborate efficiently and copied all of the base files (index.html, styles.css, and scripts.js) from previous labs. One member focused on processing and cleaning the data so that it could be imported easily. After importing the dataset, another member focused on researching and integrating TopoJSON files. Since this was a new tool for all members, we all contributed to the research process and spent time learning how to implement this feature. After that, we added a red color gradient to visually represent the state-level distribution of student loans.Then we added functionality for users to click each state and get a county-level view of the data. The third member of our team focused on designing interactive features such as the race filter and overall user experience enhancements. We spent roughly five hours developing our application. The longest aspect was learning how to use TopoJSON to visualize our data. Additionally learning how to implement the tool-tips took a substantial amount of time.</p>
+
+            <h2>AI Usage</h2>
+            <p>We used AI to assist us in teaching us how to use the TopoJSON library for the underlying map visualization. We also used AI to handle the more repetitive tasks such as matching up the state numbers to the data.</p>
+        </section>
+  
     </div>
 
     <!-- Load D3.js -->
