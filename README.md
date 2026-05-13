@@ -210,14 +210,14 @@ All team members contributed equally to the overall project development, design 
 - Participated in styling and UI refinement
 - Helped debug coordinated interactions
 
-## Bhargavi
+## Bhargavi Alluri
 - Worked on trend chart implementation
 - Assisted with dataset cleaning and preprocessing
 - Contributed to interaction design decisions
 - Helped refine chart animations and transitions
 - Participated in testing and debugging
 
-## Lauren
+## Lauren Simms
 - Developed radar chart (“disconnection fingerprint”)
 - Worked on layout organization and responsive structure
 - Assisted with visual styling and accessibility improvements
