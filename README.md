@@ -236,23 +236,6 @@ The project was completed collaboratively with an intentionally balanced workloa
 
 ---
 
-# File Structure
-
-```text
-project/
-│
-├── index.html
-├── atlas.html
-├── styles.css
-├── script.js
-├── article-map.js
-├── data/
-│   └── Lack_of_Social_Connection_20260429.csv
-│
-└── README.md
-
----
-
 # AI Usage Disclaimer
 
 This project used generative AI tools, specifically ChatGPT and OpenAI Codex, as part of the development and writing workflow. AI assistance was used intentionally and selectively rather than as a replacement for the team’s work.
@@ -269,3 +252,20 @@ The team remained fully responsible for:
 - and the final presentation of the project.
 
 AI tools functioned as supportive development resources within the workflow, similar to documentation, debugging tools, or coding assistants, while all final decisions and deliverables were completed and evaluated by the project team.
+
+---
+
+# File Structure
+
+```text
+project/
+│
+├── index.html
+├── atlas.html
+├── styles.css
+├── script.js
+├── article-map.js
+├── data/
+│   └── Lack_of_Social_Connection_20260429.csv
+│
+└── README.md
