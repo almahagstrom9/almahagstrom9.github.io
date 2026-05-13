@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Atlas | Social Disconnection Atlas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=8" />
+  </head>
+  <body class="atlas-page">
+    <nav class="site-nav">
+      <a class="site-name" href="index.html">Social Disconnection Atlas</a>
+      <div class="site-links">
+        <a href="index.html">Article</a>
+        <a href="atlas.html" aria-current="page">Explore Atlas</a>
+      </div>
+    </nav>
+
+    <main class="page-shell atlas-shell">
+      <div class="dashboard app">
+        <section class="dashboard-main">
+          <section class="map-panel card">
+            <h2>U.S. Choropleth</h2>
+            <div class="map-wrap">
+              <div id="map"></div>
+            </div>
+            <div id="legend"></div>
+          </section>
+
+          <aside class="side-rail">
+            <section class="control-panel card">
+              <h2>Controls</h2>
+              <div class="control-grid">
+                <div class="control-field">
+                  <label for="indicatorSelect">Indicator</label>
+                  <select id="indicatorSelect"></select>
+                </div>
+
+                <div class="control-field">
+                  <label for="timeSlider">Time Period</label>
+                  <div class="time-slider-control">
+                    <input id="timeSlider" type="range" min="0" max="0" step="1" value="0" />
+                    <div id="timeSliderValue" class="time-slider-value"></div>
+                  </div>
+                </div>
+
+                <div class="control-field">
+                  <label for="paletteSelect">Color Palette</label>
+                  <select id="paletteSelect">
+                    <option value="blues">Blues</option>
+                    <option value="viridis">Viridis</option>
+                    <option value="magma">Magma</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <section class="state-summary card">
+              <h2>Selected State Summary</h2>
+              <div id="stateDetail"></div>
+            </section>
+
+            <section class="analysis-card card">
+              <div class="analysis-tabs" role="tablist" aria-label="Analysis charts">
+                <button
+                  id="trendTab"
+                  class="analysis-tab is-active"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="trendPanel"
+                  data-analysis-tab="trend"
+                >
+                  Trend
+                </button>
+                <button
+                  id="fingerprintTab"
+                  class="analysis-tab"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="fingerprintPanel"
+                  data-analysis-tab="fingerprint"
+                >
+                  Fingerprint
+                </button>
+              </div>
+
+              <article id="trendPanel" class="analysis-panel is-active" role="tabpanel" aria-labelledby="trendTab">
+                <div class="chart-header">
+                  <h2 id="trendTitle">Trend: National</h2>
+                  <div id="trendLegend" class="trend-legend"></div>
+                </div>
+                <div id="trendChart"></div>
+              </article>
+
+              <article id="fingerprintPanel" class="analysis-panel" role="tabpanel" aria-labelledby="fingerprintTab" hidden>
+                <div class="chart-header">
+                  <h2 id="fingerprintTitle">Disconnection Fingerprint</h2>
+                  <div id="fingerprintLegend" class="trend-legend"></div>
+                </div>
+                <div id="fingerprintChart"></div>
+              </article>
+            </section>
+          </aside>
+        </section>
+      </div>
+
+      <div id="tooltip" role="tooltip" aria-hidden="true"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+    <script src="js/script.js?v=2"></script>
+  </body>
+</html>
