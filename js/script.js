@@ -52,6 +52,7 @@ const stateIdToName = {
   56: "Wyoming"
 };
 
+// Current atlas settings
 const appState = {
   selectedIndicator: null,
   selectedTime: null,
@@ -60,6 +61,8 @@ const appState = {
 };
 
 const defaultIndicator = "Adults who usually or always feel lonely";
+
+// Shorter labels for the radar chart
 const fingerprintLabelMap = new Map([
   ["Adults who attend church or religious services less than four times per year", "Religion"],
   ["Adults who attend meetings of clubs or organizations less than once a week", "Clubs"],
@@ -79,6 +82,7 @@ const mapHeight = 600;
 const tooltip = d3.select("#tooltip");
 const theme = getThemeTokens();
 
+// Main map SVG
 const mapSvg = d3
   .select("#map")
   .append("svg")
@@ -122,6 +126,7 @@ const trendG = trendSvg
 const trendInnerW = chartW - trendMargin.left - trendMargin.right;
 const trendInnerH = chartH - trendMargin.top - trendMargin.bottom;
 
+// Load data and map shapes together
 Promise.all([
   d3.csv("data/Lack_of_Social_Connection_20260429.csv"),
   d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
@@ -187,6 +192,7 @@ Promise.all([
 });
 
 function initializeControls(indicatorOptions) {
+  // Fill the indicator dropdown
   d3.select("#indicatorSelect")
     .selectAll("option")
     .data(indicatorOptions)
@@ -217,6 +223,7 @@ function initializeControls(indicatorOptions) {
 }
 
 function initializeAnalysisTabs() {
+  // Trend / fingerprint toggle
   d3.selectAll("[data-analysis-tab]").on("click", event => {
     const activeTab = event.currentTarget.dataset.analysisTab;
 
@@ -241,6 +248,7 @@ function initializeAnalysisTabs() {
 }
 
 function syncTimeControlOptions() {
+  // Rebuild the slider when the indicator changes
   const timeOptions = cachedTimePeriodsByIndicator.get(appState.selectedIndicator) || [];
   if (!timeOptions.length) return;
 
@@ -264,6 +272,7 @@ function updateTimeSliderValue() {
   d3.select("#timeSliderValue").text(appState.selectedTime || "");
 }
 
+// Cached so controls can redraw without reloading the CSV
 let cachedRows = [];
 let cachedStates = [];
 let cachedTimePeriodsByIndicator = new Map();
@@ -296,12 +305,14 @@ function getStateRow(rows, stateName, timeLabel, indicatorName) {
 }
 
 function getPaletteInterpolator() {
+  // Flip Viridis/Magma so darker still means more disconnection
   if (appState.selectedPalette === "viridis") return t => d3.interpolateViridis(1 - t);
   if (appState.selectedPalette === "magma") return t => d3.interpolateMagma(1 - t);
   return t => d3.interpolateBlues(0.18 + t * 0.72);
 }
 
 function updateMap(rows, statesGeo) {
+  // Only map one indicator and one time period at once
   const filtered = rows.filter(
     d =>
       d.__groupType === "state" &&
@@ -334,6 +345,7 @@ function updateMap(rows, statesGeo) {
 }
 
 function updateSelectedStateOverlay(statesGeo) {
+  // Extra layer keeps the selected state visible after color updates
   const selectedFeature = statesGeo.find(d => d.properties.name === appState.selectedState);
 
   selectedStateGroup
@@ -345,6 +357,7 @@ function updateSelectedStateOverlay(statesGeo) {
 }
 
 function drawLegend(minVal, maxVal, colorScale) {
+  // Color ramp under the map
   const w = 960;
   const h = 78;
   const legendSvg = d3
@@ -429,6 +442,7 @@ function drawLegend(minVal, maxVal, colorScale) {
 }
 
 function updateDetailPanel(rows) {
+  // Small summary card for the clicked state
   const activeState = appState.selectedState;
   const row = rows.find(
     d =>
@@ -465,6 +479,7 @@ function updateDetailPanel(rows) {
 }
 
 function updateFingerprintChart(rows) {
+  // Radar chart comparing state vs. U.S.
   const container = d3.select("#fingerprintChart");
   const fingerprintTitle = d3.select("#fingerprintTitle");
   const selectedState = appState.selectedState;
@@ -540,6 +555,7 @@ function updateFingerprintChart(rows) {
   const r = d3.scaleLinear().domain([0, maxValue]).range([0, chartRadius]);
   const angleStep = (Math.PI * 2) / series.length;
 
+  // Background rings
   for (let i = 1; i <= levels; i += 1) {
     fingerprintG
       .append("circle")
@@ -633,6 +649,7 @@ function updateFingerprintChart(rows) {
 }
 
 function updateTrendChart(rows) {
+  // Line chart for 2024 changes
   const trendTitle = d3.select("#trendTitle");
   const inYear2024 = d => d.__timeStartDate && d.__timeStartDate.getFullYear() === 2024;
   const nationalColor = theme.accent;
@@ -752,8 +769,7 @@ function drawTrendPoints(rows, xScale, yScale, color, labelForRow) {
     .on("mousemove", showTrendTooltip)
     .on("mouseleave", hideTooltip);
 
-  // Invisible hit areas make dense timeline points easier to hover without
-  // changing the visible chart marks.
+  // Bigger invisible hover targets
   trendG
     .append("g")
     .selectAll("circle")
@@ -848,12 +864,11 @@ function getFingerprintShortLabel(indicator) {
 }
 
 function showBoundedTooltip(event, html) {
+  // Keep the tooltip inside the window
   const padding = 16;
   const offset = 12;
   tooltip.style("display", "block").attr("aria-hidden", "false").html(html);
 
-  // Use viewport coordinates, then add scroll offsets, so tooltips stay within
-  // the visible window even when the atlas page is scrolled on smaller screens.
   const node = tooltip.node();
   const tooltipWidth = node.offsetWidth;
   const tooltipHeight = node.offsetHeight;
@@ -884,6 +899,7 @@ function hideTooltip() {
 }
 
 function drawFingerprintPoints(series, selectedState, chartRadius) {
+  // Dots make each radar value easier to hover
   const maxValue = d3.max(series, d => Math.max(d.stateValue || 0, d.nationalValue || 0)) || 1;
   const r = d3.scaleLinear().domain([0, maxValue]).range([0, chartRadius]);
   const angleStep = (Math.PI * 2) / series.length;
@@ -933,6 +949,7 @@ function drawFingerprintPoints(series, selectedState, chartRadius) {
 }
 
 function cleanDataset(rawRows) {
+  // Normalize the CSV once so the chart code is cleaner
   if (!rawRows.length) {
     return {
       rows: [],
@@ -1009,6 +1026,7 @@ function normalizeStateName(text) {
 }
 
 function findColumn(columns, aliases) {
+  // Lets the code survive slightly different column names
   const normalizedColumns = columns.map(c => ({ original: c, normalized: normalizeHeader(c) }));
 
   for (const alias of aliases) {
@@ -1044,8 +1062,7 @@ function parseDate(value) {
   const date = new Date(text);
   if (!Number.isNaN(date.getTime())) return date;
 
-  // Some time labels arrive as ranges rather than ISO dates. Sorting by the
-  // range start keeps the slider and trend charts in chronological order.
+  // Some labels are ranges, so sort by the start date
   const rangeMatch = text.match(/^([A-Za-z]{3,9})\s+(\d{1,2})\s+-.*,\s*(\d{4})$/);
   if (rangeMatch) {
     const [, startMonth, startDay, year] = rangeMatch;

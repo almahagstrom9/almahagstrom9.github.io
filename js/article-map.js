@@ -52,6 +52,7 @@ const articleStateIdToName = {
   56: "Wyoming"
 };
 
+// Article embed settings
 const articleMapConfig = {
   indicator: "Adults who usually or always feel lonely",
   timeLabel: "Aug 20 - Sep 16, 2024",
@@ -61,8 +62,7 @@ const articleMapConfig = {
   margin: { top: 10, right: 10, bottom: 10, left: 10 }
 };
 
-// TODO: Move shared state and fingerprint label dictionaries into one shared
-// script if the project adopts modules or a build step.
+// Short labels for the small fingerprint chart
 const articleFingerprintLabels = new Map([
   ["Adults who attend church or religious services less than four times per year", "Religion"],
   ["Adults who attend meetings of clubs or organizations less than once a week", "Clubs"],
@@ -89,6 +89,7 @@ const articleTooltip = d3
   .attr("class", "article-map-tooltip");
 const articleTheme = getArticleThemeTokens();
 
+// Load the same data used by the full atlas
 Promise.all([
   d3.csv("data/Lack_of_Social_Connection_20260429.csv"),
   d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
@@ -124,6 +125,7 @@ Promise.all([
 });
 
 function drawArticleMap(statesGeo, valuesByState, color) {
+  // Small choropleth inside the story
   const { width, height, margin } = articleMapConfig;
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -161,6 +163,7 @@ function drawArticleMap(statesGeo, valuesByState, color) {
 }
 
 function drawArticleLegend(minValue, maxValue, color) {
+  // Legend for the article map
   const width = 960;
   const height = 64;
 
@@ -234,6 +237,7 @@ function drawArticleLegend(minValue, maxValue, color) {
 }
 
 function drawArticleTrend(rows) {
+  // Maryland vs. national line chart
   if (articleTrendRoot.empty()) return;
 
   const width = 760;
@@ -322,6 +326,7 @@ function drawArticleTrend(rows) {
 }
 
 function drawArticleTrendSeries(group, rows, line, x, y, label, color) {
+  // Draw one line plus hover points
   group
     .append("path")
     .datum(rows)
@@ -384,6 +389,7 @@ function drawArticleTrendLegendItem(group, x, label, color) {
 }
 
 function drawArticleFingerprint(rows) {
+  // Compact radar chart for the Maryland section
   if (articleFingerprintRoot.empty()) return;
 
   const width = 760;
@@ -427,8 +433,6 @@ function drawArticleFingerprint(rows) {
 
   const maxValue = d3.max(series, d => Math.max(d.stateValue || 0, d.nationalValue || 0)) || 1;
   const radius = d3.scaleLinear().domain([0, maxValue]).range([0, chartRadius]);
-  // Each available indicator gets one spoke; missing indicators are filtered
-  // before this point so the labels and polygons stay aligned.
   const angleStep = (Math.PI * 2) / series.length;
 
   const svg = articleFingerprintRoot
@@ -525,6 +529,7 @@ function drawArticleFingerprint(rows) {
     .on("mouseleave", hideArticleTooltip);
 
   const points = [];
+  // Save both Maryland and U.S. points for hover tooltips
   series.forEach((d, index) => {
     if (d.stateValue != null) {
       const [x, y] = pointFor(d.stateValue, index);
@@ -554,6 +559,7 @@ function drawArticleFingerprint(rows) {
 }
 
 function normalizeArticleRow(row) {
+  // Clean up CSV fields for the article graphics
   const group = readArticleField(row, "Group");
   const state = readArticleField(row, "State");
   const lowCI = parseArticleNumber(readArticleField(row, "Low CI"));
@@ -622,13 +628,12 @@ function getArticleFingerprintLabel(indicator) {
 }
 
 function showArticleTooltip(event, html) {
+  // Keep article tooltips from spilling off screen
   const padding = 16;
   const offset = 12;
 
   articleTooltip.style("display", "block").attr("aria-hidden", "false").html(html);
 
-  // Keep article chart tooltips in the viewport instead of letting them spill
-  // outside narrow screens near the right or bottom edge.
   const node = articleTooltip.node();
   const tooltipWidth = node.offsetWidth;
   const tooltipHeight = node.offsetHeight;

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/styles.css?v=9" />
   </head>
   <body class="atlas-page">
+    <!-- Top nav -->
     <nav class="site-nav">
       <a class="site-name" href="index.html">Social Disconnection Atlas</a>
       <div class="site-links">
@@ -24,6 +25,7 @@
     <main class="page-shell atlas-shell">
       <div class="dashboard app">
         <section class="dashboard-main">
+          <!-- Main map -->
           <section class="map-panel card">
             <h2>U.S. Choropleth</h2>
             <div class="map-wrap">
@@ -33,6 +35,7 @@
           </section>
 
           <aside class="side-rail">
+            <!-- Filter controls -->
             <section class="control-panel card">
               <h2>Controls</h2>
               <div class="control-grid">
@@ -60,11 +63,13 @@
               </div>
             </section>
 
+            <!-- Clicked state info -->
             <section class="state-summary card">
               <h2>Selected State Summary</h2>
               <div id="stateDetail"></div>
             </section>
 
+            <!-- Trend and fingerprint views -->
             <section class="analysis-card card">
               <div class="analysis-tabs" role="tablist" aria-label="Analysis charts">
                 <button

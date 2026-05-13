@@ -250,3 +250,22 @@ project/
 │   └── Lack_of_Social_Connection_20260429.csv
 │
 └── README.md
+
+---
+
+# AI Usage Disclaimer
+
+This project used generative AI tools, specifically ChatGPT and OpenAI Codex, as part of the development and writing workflow. AI assistance was used intentionally and selectively rather than as a replacement for the team’s work.
+
+ChatGPT was used to help draft and refine portions of the narrative article, organize explanations, brainstorm interaction ideas, and improve documentation clarity. The article content was not copied directly from AI output without review; team members iteratively edited, fact-checked, revised, and structured the writing to match the goals of the project and the underlying dataset.
+
+OpenAI Codex was used primarily as a coding assistant for debugging, refining D3 interactions, improving code organization, and troubleshooting implementation issues. All generated code was reviewed, modified, and tested by the team before being integrated into the final project.
+
+The team remained fully responsible for:
+- visualization design decisions,
+- interaction design,
+- implementation quality,
+- testing,
+- and the final presentation of the project.
+
+AI tools functioned as supportive development resources within the workflow, similar to documentation, debugging tools, or coding assistants, while all final decisions and deliverables were completed and evaluated by the project team.
