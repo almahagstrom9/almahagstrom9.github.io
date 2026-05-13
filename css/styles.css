@@ -554,6 +554,7 @@ h2 {
 
 .control-panel {
   padding: 0.8rem 0.85rem;
+  overflow-y: auto;
 }
 
 .control-panel h2 {
